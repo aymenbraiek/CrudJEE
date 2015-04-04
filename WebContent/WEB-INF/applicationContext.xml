@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "file:/C:/Bin/spring122/dist/spring-beans.dtd">
+
+<beans>
+<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+<property name="driverClassName">
+<value>com.mysql.jdbc.Driver</value>
+</property>
+<property name="username">
+<value>root</value>
+</property>
+
+<property name="password">
+<value>root</value>
+</property>
+<property name="url">
+<value>jdbc:mysql://localhost:3306/formation</value>
+</property>
+</bean>	
+
+<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+<property name="dataSource">
+<ref bean="dataSource"></ref>
+</property>
+<property name="mappingResources">
+<list>
+<value>com/formation/objects/personne.hbm.xml</value>
+</list>
+</property>
+<property name="hibernateProperties">
+<props>
+<prop key="hibernate.dialet">org.hibernate.dialect.MySQLDialect</prop>
+<prop key="hibernate.show_sql">true</prop>
+</props>
+</property>
+</bean>
+
+
+<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+<property name="sessionFactory">
+<ref bean="sessionFactory"></ref>
+</property>
+</bean>
+
+
+<bean id="personneDao" class="com.formation.daoImpl.PersonneDaoImpl">
+<property name="hibernateTemplate">
+<ref bean="hibernateTemplate"></ref>
+</property>
+</bean>
+
+
+
+<bean id="personneService" class="com.formation.servicesImpl.PersonneServiceImpl">
+<property name="personneDao">
+<ref bean="personneDao"></ref>
+</property>
+</bean>
+
+
+
+
+</beans>

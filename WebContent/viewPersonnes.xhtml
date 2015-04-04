@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+<head>
+</head>
+<body>
+<f:view>
+<f:loadBundle basename="com.formation.bundle.messages" var="msg" />
+<h:form>
+<h:panelGrid columns="2">			
+			<h:commandLink 	action="#{langageBean.activateEN}" immediate="true">
+				<h:graphicImage url="images/en.gif" width="20" height="15"/>
+			</h:commandLink> 
+			
+			<h:commandLink action="#{langageBean.activateFR}" immediate="true" >
+				<h:graphicImage url="images/fr.gif" width="20" height="15" />
+			</h:commandLink>
+</h:panelGrid>
+  
+ 				<h:panelGrid columns="2">	
+				<h:outputText value="#{msg.nom_personne}"/>
+				<h:inputText  value="#{personneDataTableBean.nom}"/>
+				<h:outputText value="#{msg.prenom_personne}"/>
+				<h:inputText  value="#{personneDataTableBean.prenom}"/>
+               <h:commandButton value="#{msg.recherche_personne}" action="#{personneBean.recherchePersonneAction}"/>
+			</h:panelGrid>
+
+		<h:panelGrid id="data"> 
+		<rich:dataTable id="table" sortMode=""  value="#{personneDataTableBean.personnes}"  var="personne"  rows="5">
+		<f:facet name="header">
+		<h:outputText value="List Personnes" />
+		</f:facet>
+			<rich:column id="nom"  sortBy="#{personne.nom}"   >
+				<f:facet name="header">
+					<h:outputText value="Nom" />
+				</f:facet>
+			<h:outputText value="#{personne.nom}" />
+			</rich:column>
+			<rich:column id="prenom"   sortBy="#{personne.prenom}"   >
+				<f:facet name="header">
+					<h:outputText value="Prenom" />
+				</f:facet>
+				<h:outputText value="#{personne.prenom}" />
+			</rich:column>
+	        <rich:column>
+				<f:facet name="header">
+					<h:outputText value="salaire" />
+				</f:facet>
+				<h:outputText value="#{personne.salaire}" />
+			</rich:column>
+			<rich:column>
+				<f:facet name="header">
+					<h:outputText value="Date Naissance" />
+				</f:facet>
+				<h:outputText value="#{personne.dateNaissance}" >
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</rich:column>
+			<rich:column>
+				<f:facet name="header">
+					<h:outputText value="Email" />
+				</f:facet>
+				<h:outputText value="#{personne.email}" />
+			</rich:column>
+			<rich:column>
+				<f:facet name="header">
+					<h:outputText value="Update" />
+				</f:facet>
+				<h:commandLink action="#{personneBean.chargerPersonneUpdate}" >
+					<h:outputText value="Edit" />
+					<f:setPropertyActionListener value="#{personne}" target="#{personneDataTableBean.selectedPersonne}"/>
+
+				</h:commandLink>
+			</rich:column>
+	
+			<rich:column>
+				<f:facet name="header">
+					<h:outputText value="Delete" />
+				</f:facet>
+				<h:commandLink  action="#{personneBean.chargerPersonneDelete}">
+			
+					<h:outputText value="Delete" />
+					<f:setPropertyActionListener value="#{personne}" target="#{personneDataTableBean.selectedPersonne}"/>
+				</h:commandLink>
+			</rich:column>
+			<f:facet name="footer">
+			<rich:datascroller for="table" maxPages="5" />
+			</f:facet>
+		</rich:dataTable>
+		</h:panelGrid>
+	</h:form>
+</f:view>
+</body>
+</html>

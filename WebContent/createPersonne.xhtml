@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+	>
+
+
+	<head>
+	
+	</head>
+	<body>
+	
+		<f:view >
+<f:loadBundle basename="com.formation.bundle.messages" var="msg" />
+
+		 
+		<h:form >
+			<h:panelGrid columns="3">
+				<h:outputText value="#{msg.nom_personne}"/>
+				<h:inputText  value="#{personneDataTableBean.nom}" required="true" id="nom"/>
+				<h:message for="nom" errorStyle="color:red;"/>
+				
+				<h:outputText value="#{msg.prenom_personne}"/>
+				<h:inputText  value="#{personneDataTableBean.prenom}" required="true"  id="prenom"/>
+		    	<h:message for="prenom" errorStyle="color:red;"  showDetail="true"  />
+		    
+		    	     <h:outputText value="#{msg.dateNaissance_personne}" />
+		    	     
+			                   <rich:calendar value="#{personneDataTableBean.dateNaissance}"
+			                       locale="fr/FR" id="dateNaissance" 
+			                       popup="true"
+			                       datePattern="dd/MM/yyyy"
+			                       showApplyButton="false" cellWidth="24px" cellHeight="22px" style="width:200px">
+			                       <f:convertDateTime pattern="dd/MM/yyyy" />
+			                       </rich:calendar>
+			         
+		    	 <h:message for="dateNaissance" errorStyle="color:red;"  showDetail="true"  />
+		    	 
+		    	<h:outputText value="#{msg.salaire_personne}"/>
+				<h:inputText  value="#{personneDataTableBean.salaire}" required="true"  id="salaire">
+				<f:validateDoubleRange minimum="500" maximum="10000" />
+				</h:inputText>
+		    	<h:message for="salaire" errorStyle="color:red;"    />
+		    	
+		    	<h:outputText value="#{msg.email_personne}"/>
+				<h:inputText  value="#{personneDataTableBean.email}"   id="email">
+				<f:validator validatorId="emailValidator" />
+				</h:inputText>
+		    	<h:message for="email" errorStyle="color:red;" showDetail="true" />
+		    	
+               <h:commandButton value="#{msg.ajouter_personne}"  action="#{personneBean.createPersonneAction}"/>
+                <h:commandButton  value="#{msg.retour}"   action="#{personneBean.retour}" immediate="true"/>
+                </h:panelGrid>
+			
+			</h:form>
+		</f:view>
+	</body>	
+</html>  

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0">
+ 
+
+
+
+	<managed-bean>	
+		<managed-bean-name>personneBean</managed-bean-name>
+		<managed-bean-class>
+			com.formation.bean.PersonneBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		
+		<managed-property>
+		<property-name>personneService</property-name>
+		<value>#{personneService}</value>
+		</managed-property>
+			
+	</managed-bean>
+	
+    <managed-bean>
+		<managed-bean-name>langageBean</managed-bean-name>
+		<managed-bean-class>
+			com.formation.bean.LangageBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>personneDataTableBean</managed-bean-name>
+		<managed-bean-class>
+			com.formation.bean.PersonneDataTableBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		</managed-bean>
+	
+	<navigation-rule>
+		<from-view-id>/createPersonne.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/viewPersonnes.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/error.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	
+	<navigation-rule>
+		<from-view-id>/editPersonne.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/viewPersonnes.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/error.xhtml</to-view-id>
+		</navigation-case>
+	
+	</navigation-rule>
+		<navigation-rule>
+		<from-view-id>/viewPersonne.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/viewPersonnes.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/error.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>errorSupp</from-outcome>
+			<to-view-id>/viewPersonne.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-action>#{personneBean.chargerPersonneUpdate}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/editPersonne.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-action>#{personneBean.chargerPersonneDelete}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/viewPersonne.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+		<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-action>#{personneBean.recherchePersonneAction}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/viewPersonnes.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-action>#{personneBean.recherchePersonneAction}</from-action>
+			<from-outcome>failed</from-outcome>
+			<to-view-id>/erreur.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+
+		<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-action>#{personneBean.retour}</from-action>
+			<from-outcome>successR</from-outcome>
+			<to-view-id>/viewPersonnes.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	
+		<!-- example pupup -->
+			<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-action>#{personneBean.updatePersonneAction}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/viewPersonnes.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-action>#{personneBean.updatePersonneAction}</from-action>
+			<from-outcome>failed</from-outcome>
+			<to-view-id>/erreur.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-action>#{personneBean.deletePersonneAction}</from-action>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/viewPersonnesPupup.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-action>#{personneBean.deletePersonneAction}</from-action>
+			<from-outcome>failed</from-outcome>
+			<to-view-id>/erreur.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- fin example pupup -->
+	
+	   <validator>
+        <validator-id>emailValidator</validator-id>
+        <validator-class>com.formation.validators.EmailValidator</validator-class>
+    </validator>
+	
+<application>
+<message-bundle>com.formation.bundle.messagesErr</message-bundle>
+<locale-config>
+<default-locale>fr</default-locale>
+</locale-config>
+
+	
+		<variable-resolver>
+			org.springframework.web.jsf.DelegatingVariableResolver
+		</variable-resolver>
+		
+
+</application>	
+
+
+
+
+
+</faces-config>
